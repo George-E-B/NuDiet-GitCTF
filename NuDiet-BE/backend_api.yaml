@@ -1,0 +1,450 @@
+
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "NuDiet API"
+  license:
+    name: "MIT"
+  description: "OpenAPI specification for the NuDiet Backend API"
+
+paths:
+  /clients:
+    get:
+      description: "return list of clients"
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/client-list"
+
+    post:
+      description: "add new client"
+      requestBody:
+        description: new client
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/client-request-obj"
+              
+      responses:
+        "201":
+          description: "successfully created - return id of new client"
+          content:
+            text/plain:
+              schema:
+                type: integer
+
+  /clients/{id}:
+    get:
+      description: "return client with id {id}"
+      responses:
+        "200":
+          description: "success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/client-response-obj"
+        "404": 
+          description: client not found
+
+    put:
+      description: "update client with id {id}"
+      requestBody:
+        description: updated client
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/client-request-obj"
+      responses:
+        "204":
+          description: "success"
+        "404": 
+          description: client not found
+
+    delete:
+      description: "delete client with id {id}"
+      responses:
+        "204":
+          description: "success"
+        "404": 
+          description: client not found
+
+
+
+
+
+  /diet-templates:
+    get:
+      description: get all templates (slim)
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/diet-template-list"
+    post:
+      description: "add template"
+      requestBody:
+        description: diet template to be added
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/diet-template-request-obj"
+      responses:
+        "201":
+          description: success - return id of template
+          content:
+            text/plain:
+              schema:
+                type: integer
+
+  /diet-templates/{id}:
+    get:
+      description: get template with id {template-id} (fat)
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/diet-template-response-obj"
+        404:
+          description: diet template not found
+
+    put:
+      description: "update template with id {template-id}"
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/diet-template-request-obj"
+      responses:
+        "204": 
+          description: success
+        "404":
+          description: diet template not found
+
+    delete:
+      description: "delete template with id {template-id}"
+      responses:
+        "204":
+          description: success
+        "404": 
+          description: template not found
+
+
+
+
+
+  /recipes:
+    get:
+      description: get all recipes (slim)
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/recipe-list"
+    post:
+      description: "add recipe"
+      requestBody:
+        description: recipe to be added
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/recipe-request-obj"
+      responses:
+        "201":
+          description: success - return id of template
+          content:
+            text/plain:
+              schema:
+                type: integer
+
+  /recipes/{id}:
+    get:
+      description: get recipe with id {id} (fat)
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/recipe-response-obj"
+        404:
+          description: recipe not found
+
+    put:
+      description: "update recipe with id {id}"
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/recipe-request-obj"
+      responses:
+        "204": 
+          description: success
+        "404":
+          description: diet template not found
+
+    delete:
+      description: "delete recipe with id {id}"
+      responses:
+        "204":
+          description: success
+        "404": 
+          description: recipe not found
+  
+
+
+
+
+
+
+components:
+  parameters:
+    id:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: number
+    
+  schemas:
+    client-list:
+      type: array
+      items:
+        type: object
+        required: [id, name]
+        properties:
+          id:
+            type: number
+          name: 
+            type: string
+          
+    client-response-obj:
+      type: object
+      properties:
+        id: 
+          type: number
+        first-name:
+          type: string
+          example: "john"
+        last-name:
+          type: string
+          example: "Doe"
+        sex:
+          type: string
+          example: M
+        date-of-birth:
+          type: string
+          example: "20010916"
+        email:
+          type: string
+          example: "john.doe@gmail.com"
+        height:
+          type: number
+        goal:
+          $ref: "#/components/schemas/bodyinfo"
+        bodyprogress: 
+          $ref: "#/components/schemas/bodyprogress"
+        diet-plan:
+          $ref: "#/components/schemas/client-diet"
+      
+    client-request-obj:
+      type: object
+      properties:
+        first-name:
+          type: string
+        last-name:
+          type: string
+        sex:
+          type: string
+          example: M
+        date-of-birth:
+          type: string
+        email:
+          type: string
+        height:
+          type: number
+        goal:
+          $ref: "#/components/schemas/bodyinfo"
+        bodyprogress: 
+          $ref: "#/components/schemas/bodyprogress"
+        diet-plan:
+          $ref: "#/components/schemas/client-diet"
+
+    bodyprogress:
+      type: object
+      properties:
+        (yyyymmdd):
+          $ref: "#/components/schemas/bodyinfo"
+
+    bodyinfo: 
+      type: object
+      properties:
+        weight:
+          type: number
+        
+        muscular-mass:
+          type: number
+        fat-mass:
+          type: number
+
+    client-diet:
+      type: object
+      properties:
+        meals:
+          type: object
+          properties:
+            (0-6):
+              type: object
+              properties:
+                (0-23):
+                  $ref: "#/components/schemas/meal"
+    
+
+
+    diet-template-list:
+      type: array
+      items: 
+        type: object
+        required: [name, id]
+        properties:
+          name: 
+            type: string
+          id: 
+            type: number
+      
+
+    diet-template-response-obj:
+      type: object
+      properties:
+        name:
+          type: string
+        group-name: 
+          type: string
+        id:
+          type: number
+        meals:
+          type: object
+          properties:
+            (0-6):
+              type: object
+              properties:
+                (0-23):
+                  $ref: "#/components/schemas/meal"
+    
+    diet-template-request-obj:
+      type: object
+      properties:
+        name:
+          type: string
+        group-name: 
+          type: string
+        meals:
+          type: object
+          properties:
+            (0-6):
+              type: object
+              properties:
+                (0-23):
+                  $ref: "#/components/schemas/meal"
+
+    meal:
+      description: somewhat an instance of a recipe - references a certain recipe but includes amounts for EACH ingredient
+      type: object
+      properties:
+        recipe-id:
+          type: number
+        ingredients:
+          type: array
+          items:
+            type: object
+            properties:
+              foodstuff-id:
+                type: number
+              amount:
+                type: number
+
+    recipe-list:
+      type: array
+      items: 
+        required: [name, id]
+        type: object
+        properties:
+          name:
+            type: string
+          id: 
+            type: number
+
+
+    recipe-response-obj:
+      type: object
+      properties:
+        id: 
+          type: number
+        group:
+          type: string
+        name:
+          type: string
+        instructions:
+          type: string
+        ingredients:
+          type: array
+          items:
+            type: object
+            properties:
+              foodstuff-id:
+                type: number
+              amount:
+                type: number
+              # unit is implied by foodstuff, so not necessary to specify I think
+
+
+    recipe-request-obj:
+      type: object
+      properties:
+        group:
+          type: string
+        name:
+          type: string
+        instructions:
+          type: string
+        ingredients:
+          type: array
+          items:
+            type: object
+            properties:
+              foodstuff-id:
+                type: number
+              amount:
+                type: number
+              # unit is implied by foodstuff, so not necessary to specify I think
+
+
+    foodstuff:
+      type: object
+      properties:
+        id: 
+          type: number
+        name: 
+          type: string
+        carbs-per-unit:
+          type: number
+        fat-per-unit:
+          type: number
+        protein-per-unit:
+          type: number
+        serving-size:
+          type: number
+        unit: 
+          type: string

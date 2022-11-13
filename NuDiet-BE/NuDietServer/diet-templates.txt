@@ -1,0 +1,1 @@
+[{"id": 0, "name": "lose-belly", "group-name": "lose-diets", "meals": [0, 10, 4]}, {"id": 1, "name": "vegeterian-bulk", "group-name": "vegeterian", "meals": [5, 1, 7]}, {"id": 2, "name": "protein-only", "group-name": "proteinGroup", "meals": [0, 1, 2]}]

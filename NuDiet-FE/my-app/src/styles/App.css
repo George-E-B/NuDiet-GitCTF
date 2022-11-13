@@ -1,0 +1,7 @@
+.App{
+    background-image: radial-gradient(#34a7d1 2px, transparent 2px), radial-gradient(#34a7d1 2px, transparent 2px);
+    background-size: 21px 21px;
+    background-position: 0 0, 10.5px 10.5px;
+    background-color: #fffdf7;
+    position: relative;
+}

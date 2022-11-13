@@ -1,0 +1,16 @@
+.main-div{
+    padding-top: 20px;
+    padding-left: 250px;
+}
+.button{
+    width: 20%;
+    float: right;
+}
+.input{
+    width: 15%;
+}
+#mod-data{
+    width: 40%;
+    height: 70px;
+    align-self: center;
+}

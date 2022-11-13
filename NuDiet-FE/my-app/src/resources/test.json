@@ -1,0 +1,35 @@
+{
+  "id": 0,
+  "first-name": "john",
+  "last-name": "Doe",
+  "sex": "M",
+  "date-of-birth": "20010916",
+  "email": "john.doe@gmail.com",
+  "height": 0,
+  "goal": {
+    "weight": 0,
+    "muscular-mass": 0,
+    "fat-mass": 0
+  },
+  "bodyprogress": [{
+    "(yyyymmdd)": 20220101,
+      "weight": 0,
+      "muscular-mass": 0,
+      "fat-mass": 0
+  }],
+  "diet-plan": {
+    "meals": {
+      "(0-6)": {
+        "(0-23)": {
+          "recipe-id": 0,
+          "ingredients": [
+            {
+              "foodstuff-id": 0,
+              "amount": 0
+            }
+          ]
+        }
+      }
+    }
+  }
+}

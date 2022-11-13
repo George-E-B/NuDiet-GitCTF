@@ -1,0 +1,39 @@
+.page {
+    min-height: 100vh;
+    height: 100%;
+}
+
+.nav {
+    background-color: #7bbed6;
+}
+
+.nav--logo {
+    width: 35pt;
+    height: 35pt;
+}
+
+.nav-link {
+    /* width: 53pt; */
+    margin-top: 6pt;
+}
+
+
+.tab {
+    padding-top: 6pt;
+}
+
+
+.item-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 20pt;
+}
+
+.item-list--item {
+    margin: 0pt 10pt 10pt 0pt;
+}
+
+.weekCalendar {
+    width:100px;
+}
