@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from NuDietEndPoints.models import ClientMockup
 from django.views.decorators.csrf import csrf_exempt
 import json
+import asyncio
 
 # Create your views here.
 
@@ -26,23 +27,28 @@ def getClientList(): ##currently uses clients.txt to get client info
         })
     return HttpResponse(json.dumps(slimList), status=200) ##ensure proper JSON formatting of dictionary
 
-def getFileList(filename):
-    file = open(filename, "a+") ##creates client file if it doesn't exist already
-    file.close()
+async def getFileList(filename):
+    lock = asyncio.Lock()
+    async with lock:  ##uses lock to stop unintended race condition
+        file = open(filename, "a+") ##creates client file if it doesn't exist already
+        file.close()
 
-    file = open(filename, "r")
-    list = json.loads(file.readline())
-    file.close()
-    print(list)
+        file = open(filename, "r")
+        list = json.loads(file.readline())
+        file.close()
+        print(list)
+
     return list
 
-def writeFileList(filename, list):
-    file = open(filename, "a+")    ##creates file if it doesn't exist already
-    file.close()
+async def writeFileList(filename, list):
+    lock = asyncio.Lock()
+    async with lock:  ##uses lock to stop unintended race condition
+        file = open(filename, "a+")    ##creates file if it doesn't exist already
+        file.close()
 
-    file = open(filename, "w")
-    file.writelines(list)
-    file.close()
+        file = open(filename, "w")
+        file.writelines(list)
+        file.close()
 
 def addData(request, filename):
     dataDictionary = json.loads(request.body)    ##get data from the request and convert from json to python dict
