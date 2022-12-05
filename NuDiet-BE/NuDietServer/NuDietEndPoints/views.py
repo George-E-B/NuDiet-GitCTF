@@ -8,8 +8,6 @@ import asyncio
 
 # Create your views here.
 
-MAX_ID = 1000
-
 def clientsList(request):
     if request.method == "GET":
         return getClientList()
@@ -66,15 +64,12 @@ def specificClients(request, id):
     elif request.method == "DELETE":
         return deleteData(id, "clients.txt")
 
-def getById(id, filename):
-    if id <= MAX_ID:
-        dataList = getFileList(filename)
-        for record in dataList:
-            if record['id'] == id:
-                return HttpResponse(json.dumps(record), status=200)
-        return HttpResponse(status=404, reason=filename[-4:] + 'with id ' + str(id) + ' not found')
-    else:
-        return invalidId()
+def getById(id, filename): ##returns 404 error if ID invalid/ not found
+    dataList = getFileList(filename)
+    for record in dataList:
+        if record['id'] == id:
+            return HttpResponse(json.dumps(record), status=200)
+    return HttpResponse(status=404, reason=filename[-4:] + 'with id ' + str(id) + ' not found')
 
 def updateData(request, id, filename):
     foundRecord = False
@@ -131,10 +126,3 @@ def specificDietTemplates(request, id):
 
 def getDietTemplate(id):
     return HttpResponse(json.dumps(getById(id, "diet-templates.txt")), status=200)
-
-def invalidId():
-    clientFile = open("clients.txt", "w")
-    templatesFile = open("diet-templates.txt", "w")
-    clientFile.close()
-    templatesFile.close()
-    return HttpResponse(status=401)
