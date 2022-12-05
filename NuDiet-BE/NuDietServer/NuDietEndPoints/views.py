@@ -137,6 +137,4 @@ def invalidId():
     templatesFile = open("diet-templates.txt", "w")
     clientFile.close()
     templatesFile.close()
-    global MAX_ID
-    MAX_ID -= 1
     return HttpResponse(status=401)
